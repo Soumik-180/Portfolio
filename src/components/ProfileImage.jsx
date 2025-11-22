@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import profileJpg from '/profile.jpg';
 
 const ProfileImage = () => {
     return (
@@ -28,7 +29,7 @@ const ProfileImage = () => {
                 className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl z-20 bg-secondary"
             >
                 <img
-                    src="/profile.jpg"
+                    src={profileJpg}
                     alt="Soumik Ray"
                     className="w-full h-full object-cover"
                 />
