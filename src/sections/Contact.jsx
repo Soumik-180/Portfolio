@@ -40,9 +40,7 @@ const Contact = () => {
                     </motion.a>
                 </div>
 
-                <footer className="mt-20 text-sm text-muted/50">
-                    <p>Designed & Built by Soumik Ray's AI Assistant</p>
-                </footer>
+
             </motion.div>
         </section>
     );
