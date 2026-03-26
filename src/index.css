@@ -18,6 +18,14 @@ body {
   background-color: #f8f8f8;
 }
 
+/* Safari GIF animation fix — forces GPU compositing layer to prevent frozen frames */
+img {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
 /* Custom Floating Animations for Layouts */
 @keyframes float {
   0% { transform: translateY(0px); }
