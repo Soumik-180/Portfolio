@@ -1,22 +1,5 @@
-import React, { useRef, useEffect } from 'react';
-
 const About = () => {
-    const aboutMeVideo = `${import.meta.env.BASE_URL}assets/about me.mp4`;
-    const videoRef = useRef(null);
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-        video.muted = true;
-        const tryPlay = () => {
-            video.muted = true;
-            video.play().catch(() => {});
-        };
-        video.addEventListener('canplay', tryPlay);
-        tryPlay();
-        return () => video.removeEventListener('canplay', tryPlay);
-    }, []);
-
+    const aboutMeGif = `${import.meta.env.BASE_URL}assets/about me.gif`;
     return (
         <section className="py-16 md:py-24" id="about">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -34,15 +17,9 @@ const About = () => {
                         </div>
                         {/* Video Content */}
                         <div className="rounded-2xl overflow-hidden aspect-[4/5] bg-gray-100 dark:bg-slate-700 border-2 border-white/50 dark:border-transparent cursor-pointer">
-                            <video
-                                ref={videoRef}
-                                src={aboutMeVideo}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                preload="auto"
-                                webkit-playsinline="true"
+                            <img
+                                src={aboutMeGif}
+                                alt="About Me Animation"
                                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                             />
                         </div>
