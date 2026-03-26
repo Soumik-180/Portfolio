@@ -5,10 +5,16 @@ const About = () => {
     const videoRef = useRef(null);
 
     useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.muted = true;
-            videoRef.current.play().catch(() => {});
-        }
+        const video = videoRef.current;
+        if (!video) return;
+        video.muted = true;
+        const tryPlay = () => {
+            video.muted = true;
+            video.play().catch(() => {});
+        };
+        video.addEventListener('canplay', tryPlay);
+        tryPlay();
+        return () => video.removeEventListener('canplay', tryPlay);
     }, []);
 
     return (
@@ -35,6 +41,8 @@ const About = () => {
                                 loop
                                 muted
                                 playsInline
+                                preload="auto"
+                                webkit-playsinline="true"
                                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                             />
                         </div>
