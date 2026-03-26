@@ -20,7 +20,7 @@ const About = () => {
                             <img
                                 src={aboutMeGif}
                                 alt="About Me Animation"
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                                className="w-full h-full object-cover"
                             />
                         </div>
                     </div>
