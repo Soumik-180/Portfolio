@@ -1,5 +1,15 @@
+import React, { useEffect, useRef } from "react";
+
 const About = () => {
+    const videoRef = useRef(null);
     const aboutMeVideo = `${import.meta.env.BASE_URL}assets/about me.mp4`;
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play().catch(() => {});
+        }
+    }, []);
+
     return (
         <section className="py-16 md:py-24" id="about">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -18,7 +28,9 @@ const About = () => {
                         {/* Video Content */}
                         <div className="rounded-2xl overflow-hidden aspect-[4/5] bg-gray-100 dark:bg-slate-700 border-2 border-white/50 dark:border-transparent cursor-pointer">
                             <video
+                                ref={videoRef}
                                 autoPlay
+
                                 loop
                                 muted
                                 playsInline
