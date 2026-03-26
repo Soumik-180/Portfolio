@@ -2,12 +2,28 @@ import React, { useEffect, useRef } from "react";
 
 const About = () => {
     const videoRef = useRef(null);
-    const aboutMeVideo = `${import.meta.env.BASE_URL}assets/about me.mp4`;
+    const aboutMeVideo = `${import.meta.env.BASE_URL}assets/about-me.mp4`;
 
     useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.play().catch(() => {});
-        }
+        const video = videoRef.current;
+        if (!video) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => {});
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
+
+        observer.observe(video);
+
+        return () => {
+            if (video) observer.unobserve(video);
+        };
     }, []);
 
     return (
