@@ -75,7 +75,7 @@ const Contact = () => {
             >
                {/* GIF Image */}
                <img 
-                 src={`${import.meta.env.BASE_URL}assets/logo/${social.gif}`} 
+                src={`${import.meta.env.BASE_URL}assets/logo/${social.gif}?v=${new Date().getTime()}`} 
                  alt={social.name}
                  className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain relative z-10 drop-shadow-lg ${social.name === 'LinkedIn' ? 'scale-[0.8]' : ''}`}
                />

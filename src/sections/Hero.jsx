@@ -1,5 +1,5 @@
 const Hero = () => {
-  const hiGif = `${import.meta.env.BASE_URL}assets/hi.gif`;
+  const hiGif = `${import.meta.env.BASE_URL}assets/hi.gif?v=${new Date().getTime()}`;
 
   return (
     <section className="min-h-[85vh] flex items-center pt-32 pb-12 md:pb-20" id="home">

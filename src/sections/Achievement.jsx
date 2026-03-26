@@ -25,7 +25,7 @@ const Achievement = () => {
               className="relative w-full max-w-[450px] lg:max-w-[480px] h-[400px] md:h-[450px] lg:h-[500px]"
             >
               <img
-                src={`${import.meta.env.BASE_URL}assets/achievement.gif`}
+                src={`${import.meta.env.BASE_URL}assets/achievement.gif?v=${new Date().getTime()}`}
                 alt="Achievement Illustration"
                 className="w-full h-full object-cover rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 transition-transform duration-500 hover:scale-105 cursor-pointer"
               />

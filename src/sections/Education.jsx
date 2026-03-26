@@ -47,7 +47,7 @@ const Education = () => {
               className="relative w-full max-w-[450px] lg:max-w-[480px] h-[400px] md:h-[450px] lg:h-[500px]"
             >
               <img
-                src={`${import.meta.env.BASE_URL}assets/education.gif`}
+                src={`${import.meta.env.BASE_URL}assets/education.gif?v=${new Date().getTime()}`}
                 alt="Education Illustration"
                 className="w-full h-full object-cover rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 hover:scale-105 transition-transform duration-500 cursor-pointer"
               />

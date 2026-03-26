@@ -1,5 +1,5 @@
 const Project = () => {
-    const projectGif = `${import.meta.env.BASE_URL}assets/project.gif`;
+    const projectGif = `${import.meta.env.BASE_URL}assets/project.gif?v=${new Date().getTime()}`;
     return (
         <section className="min-h-screen py-4 flex flex-col items-center justify-center relative overflow-hidden" id="project">
             <div className="container mx-auto px-6 relative z-10 w-full flex flex-col items-center space-y-4">
