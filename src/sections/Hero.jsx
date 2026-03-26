@@ -1,6 +1,6 @@
-import hiGif from '../../assets/hi.gif';
-
 const Hero = () => {
+  const hiGif = `${import.meta.env.BASE_URL}assets/hi.gif`;
+
   return (
     <section className="min-h-[85vh] flex items-center pt-32 pb-12 md:pb-20" id="home">
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center w-full">
