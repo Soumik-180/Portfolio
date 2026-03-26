@@ -1,5 +1,5 @@
 const About = () => {
-    const aboutMeGif = `${import.meta.env.BASE_URL}assets/about me.gif`;
+    const aboutMeVideo = `${import.meta.env.BASE_URL}assets/about me.mp4`;
     return (
         <section className="py-16 md:py-24" id="about">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -17,11 +17,15 @@ const About = () => {
                         </div>
                         {/* Video Content */}
                         <div className="rounded-2xl overflow-hidden aspect-[4/5] bg-gray-100 dark:bg-slate-700 border-2 border-white/50 dark:border-transparent cursor-pointer">
-                            <img
-                                src={aboutMeGif}
-                                alt="About Me Animation"
+                            <video
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
                                 className="w-full h-full object-cover"
-                            />
+                            >
+                                <source src={aboutMeVideo} type="video/mp4" />
+                            </video>
                         </div>
                     </div>
                 </div>
