@@ -2,28 +2,14 @@ import React, { useEffect, useRef } from "react";
 
 const About = () => {
     const videoRef = useRef(null);
-    const aboutMeVideo = `${import.meta.env.BASE_URL}assets/about-me.mp4`;
+    const aboutMeVideo = "/Portfolio/assets/about-me.mp4";
 
     useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        video.play().catch(() => {});
-                    }
-                });
-            },
-            { threshold: 0.5 }
-        );
-
-        observer.observe(video);
-
-        return () => {
-            if (video) observer.unobserve(video);
-        };
+        if (videoRef.current) {
+            videoRef.current.play().catch((err) => {
+                console.error("Video play failed:", err);
+            });
+        }
     }, []);
 
     return (
@@ -45,11 +31,11 @@ const About = () => {
                         <div className="rounded-2xl overflow-hidden aspect-[4/5] bg-gray-100 dark:bg-slate-700 border-2 border-white/50 dark:border-transparent cursor-pointer">
                             <video
                                 ref={videoRef}
-                                autoPlay
-
                                 loop
                                 muted
                                 playsInline
+                                preload="auto"
+                                webkit-playsinline="true"
                                 className="w-full h-full object-cover"
                             >
                                 <source src={aboutMeVideo} type="video/mp4" />
