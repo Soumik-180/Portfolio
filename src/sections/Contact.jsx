@@ -1,49 +1,106 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Mail } from 'lucide-react';
+
+const socialLinks = [
+  {
+    name: 'LinkedIn',
+    url: 'https://www.linkedin.com/in/soumik-ray-455524361/',
+    gif: 'linkedin.gif'
+  },
+  {
+    name: 'GitHub',
+    url: 'https://github.com/Soumik-180',
+    gif: 'github.gif'
+  },
+  {
+    name: 'Instagram',
+    url: 'https://www.instagram.com/soumik180/',
+    gif: 'instagram.gif'
+  },
+  {
+    name: 'Facebook',
+    url: 'https://www.facebook.com/soumik.ray.142/',
+    gif: 'facebook.gif'
+  },
+  {
+    name: 'Gmail',
+    url: 'mailto:skrsoumikray@gmail.com',
+    gif: 'gmail.gif'
+  }
+];
 
 const Contact = () => {
-    return (
-        <section className="py-20 text-center" id="contact">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+  return (
+    <section 
+      id="contact" 
+      className="min-h-[60vh] py-20 bg-white dark:bg-[#0f172a] transition-colors duration-300 flex flex-col items-center justify-center relative z-10 w-full"
+    >
+      <div className="container mx-auto px-4 flex flex-col items-center">
+        
+        {/* Title with hover zoom effect */}
+        <motion.h2 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="inline-block text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-[#111] dark:text-white mb-16 md:mb-24 transition-transform duration-500 hover:scale-[1.15] cursor-default"
+        >
+          Contact me
+        </motion.h2>
+
+        {/* Social Links Flex Container */}
+        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16 max-w-4xl mx-auto">
+          {socialLinks.map((social, index) => (
+            <motion.a
+              key={social.name}
+              href={social.url}
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ 
+                duration: 0.5, 
+                delay: index * 0.1,
+                type: "spring", stiffness: 100 
+              }}
+              whileHover={{ 
+                y: -15, 
+                scale: 1.15,
+                transition: { type: "spring", stiffness: 300, damping: 15 }
+              }}
+              whileTap={{ scale: 0.95 }}
+              title={social.name}
+              className="group relative flex flex-col items-center"
             >
-                <h2 className="text-4xl font-bold mb-6">Get In Touch</h2>
-                <p className="text-muted max-w-xl mx-auto mb-10">
-                    I'm currently looking for new opportunities and collaborations in Bioinformatics and Computational Biology.
-                    Whether you have a question or just want to say hi, I'll try my best to get back to you!
-                </p>
+               {/* GIF Image */}
+               <img 
+                 src={`${import.meta.env.BASE_URL}assets/logo/${social.gif}`} 
+                 alt={social.name}
+                 className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain relative z-10 drop-shadow-lg ${social.name === 'LinkedIn' ? 'scale-[0.8]' : ''}`}
+               />
+               
+               {/* Tooltip-style Name on Hover */}
+               <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-medium font-heading text-gray-700 dark:text-gray-300">
+                 {social.name}
+               </span>
+            </motion.a>
+          ))}
+        </div>
 
-                <div className="flex flex-wrap gap-4 justify-center">
-                    <motion.a
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="https://www.linkedin.com/in/soumik-ray-455524361/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 bg-accent text-primary px-6 py-3 rounded-full font-semibold hover:bg-blue-400 transition-colors"
-                    >
-                        <Linkedin size={20} />
-                        Connect on LinkedIn
-                    </motion.a>
-                    <motion.a
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="mailto:skrsoumikray@gmail.com"
-                        className="flex items-center gap-2 border border-muted text-white px-6 py-3 rounded-full font-semibold hover:border-white transition-colors"
-                    >
-                        <Mail size={20} />
-                        Contact Me
-                    </motion.a>
-                </div>
-
-
-            </motion.div>
-        </section>
-    );
+        {/* Final Outro Message */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-20 md:mt-32 text-xl md:text-2xl font-serif italic text-gray-500 dark:text-gray-400 text-center"
+        >
+          Thank you for visiting
+        </motion.p>
+      </div>
+    </section>
+  );
 };
 
 export default Contact;

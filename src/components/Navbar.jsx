@@ -1,112 +1,67 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 
 const navItems = [
-    { name: 'About', href: '#about' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Photography', href: '#photography' },
-    { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Project', href: '#project' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Education', href: '#education' },
+  { name: 'Achievement', href: '#achievement' },
+  { name: 'Photography', href: '#photography' },
+  { name: 'Contact', href: '#contact' }
 ];
 
 const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
+  useEffect(() => {
+    // Force light mode on initial load
+    document.documentElement.classList.remove('dark');
+  }, []);
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+  const toggleDarkMode = () => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove('dark');
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      setIsDarkMode(true);
+    }
+  };
 
-    const scrollToSection = (e, href) => {
-        e.preventDefault();
-        const element = document.querySelector(href);
-        if (element) {
-            const offset = 80; // Height of navbar + padding
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+  return (
+    <nav className="fixed top-0 left-0 w-full pt-4 pb-2 px-8 md:px-16 flex items-center justify-between z-[100] pointer-events-none transition-colors duration-300">
+      {/* Navigation Links */}
+      <div className="hidden lg:flex items-center gap-4 xl:gap-6 flex-wrap pointer-events-auto">
+        {navItems.map((item, index) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className={`text-base font-medium transition-all duration-300 hover:scale-110 origin-left hover:text-black dark:hover:text-white hover:underline underline-offset-4 ${
+              index === 0 
+                ? 'text-black dark:text-white underline underline-offset-4 decoration-2' 
+                : 'text-gray-600 dark:text-gray-400'
+            }`}
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-            setIsMobileMenuOpen(false);
-        }
-    };
-
-    return (
-        <>
-            <motion.nav
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-primary/80 backdrop-blur-md border-b border-white/10 py-4' : 'bg-transparent py-6'
-                    }`}
-            >
-                <div className="max-w-5xl mx-auto px-6 sm:px-12 flex items-center justify-between">
-                    {/* Logo / Name */}
-                    <a
-                        href="#"
-                        onClick={(e) => scrollToSection(e, '#hero')}
-                        className="text-xl font-bold text-white tracking-tight hover:text-accent transition-colors"
-                    >
-                        Soumik<span className="text-accent">.</span>
-                    </a>
-
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center gap-8">
-                        {navItems.map((item) => (
-                            <a
-                                key={item.name}
-                                href={item.href}
-                                onClick={(e) => scrollToSection(e, item.href)}
-                                className="text-sm font-medium text-muted hover:text-accent transition-colors"
-                            >
-                                {item.name}
-                            </a>
-                        ))}
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="md:hidden text-white p-2"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    >
-                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
-                </div>
-            </motion.nav>
-
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="fixed top-[70px] left-0 right-0 z-40 bg-primary/95 backdrop-blur-xl border-b border-white/10 md:hidden overflow-hidden"
-                    >
-                        <div className="flex flex-col p-6 gap-4">
-                            {navItems.map((item) => (
-                                <a
-                                    key={item.name}
-                                    href={item.href}
-                                    onClick={(e) => scrollToSection(e, item.href)}
-                                    className="text-lg font-medium text-muted hover:text-accent transition-colors py-2"
-                                >
-                                    {item.name}
-                                </a>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
-    );
+      {/* Right Side Control */}
+      <div className="flex items-center ml-auto pointer-events-auto">
+        {/* Dark Mode Toggle */}
+        <button 
+          onClick={toggleDarkMode}
+          className="text-black dark:text-white p-2 rounded-full cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 hover:-translate-y-1 hover:scale-110 transition-all duration-300 opacity-90 hover:opacity-100"
+          aria-label="Toggle Dark Mode"
+        >
+          {isDarkMode ? <Sun size={24} fill="currentColor" /> : <Moon size={24} fill="currentColor" />}
+        </button>
+      </div>
+    </nav>
+  );
 };
 
 export default Navbar;

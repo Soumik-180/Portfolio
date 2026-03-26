@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,15 +8,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#0f172a", // Slate 900
-        secondary: "#1e293b", // Slate 800
-        accent: "#38bdf8", // Sky 400
-        text: "#f8fafc", // Slate 50
-        muted: "#94a3b8", // Slate 400
+        primary: "#ffffff",
+        secondary: "#f8f9fa",
+        accent: "#000000",
+        text: "#111827",
+        muted: "#4b5563",
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['"Times New Roman"', 'Times', 'serif'],
+        heading: ['"Times New Roman"', 'Times', 'serif'],
       },
+      animation: {
+        'spin-slow': 'spin 12s linear infinite',
+      }
     },
   },
   plugins: [],

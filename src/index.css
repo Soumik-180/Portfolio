@@ -3,48 +3,63 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: dark;
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: #ffffff;
+  color: #111827;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #f8f8f8;
 }
 
-@keyframes scan {
-  0% {
-    transform: translateY(-100%);
-  }
-
-  100% {
-    transform: translateY(100%);
-  }
+/* Custom Floating Animations for Layouts */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
 }
 
-@keyframes border-flow {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
-.animate-scan {
-  animation: scan 3s linear infinite;
+.animate-float-delayed {
+  animation: float 6s ease-in-out 3s infinite;
 }
 
-.animate-border-flow {
-  animation: border-flow 4s ease infinite;
+/* Hexagon Shape */
+.hexagon {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.animate-float-slow {
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Bubble Wobble Effect */
+@keyframes wobble {
+  0%, 100% { border-radius: 50%; transform: scale(1); }
+  25% { border-radius: 45% 55% 50% 50%; transform: scale(1.02, 0.98); }
+  50% { border-radius: 50% 50% 55% 45%; transform: scale(0.98, 1.02); }
+  75% { border-radius: 55% 45% 50% 50%; transform: scale(1.01, 0.99); }
+}
+
+.animate-wobble {
+  animation: wobble 4s ease-in-out infinite;
+}
+
+/* Iridescence Effect */
+@keyframes iridescence {
+  0%, 100% { filter: hue-rotate(0deg) saturate(1); }
+  50% { filter: hue-rotate(15deg) saturate(1.2); }
+}
+
+.animate-iridescence {
+  animation: iridescence 8s linear infinite;
 }
