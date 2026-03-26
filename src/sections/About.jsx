@@ -1,5 +1,5 @@
 const About = () => {
-    const aboutMeGif = `${import.meta.env.BASE_URL}assets/about me.gif?v=${new Date().getTime()}`;
+    const aboutMeGif = `${import.meta.env.BASE_URL}assets/about me.webp`;
     return (
         <section className="py-16 md:py-24" id="about">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
