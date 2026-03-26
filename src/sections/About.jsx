@@ -5,11 +5,20 @@ const About = () => {
     const aboutMeVideo = "/Portfolio/assets/about-me.mp4";
 
     useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.play().catch((err) => {
-                console.error("Video play failed:", err);
+        const video = videoRef.current;
+        if (!video) return;
+
+        const handleCanPlay = () => {
+            video.play().catch((err) => {
+                console.error("Play failed:", err);
             });
-        }
+        };
+
+        video.addEventListener("canplay", handleCanPlay);
+
+        return () => {
+            video.removeEventListener("canplay", handleCanPlay);
+        };
     }, []);
 
     return (
@@ -35,7 +44,6 @@ const About = () => {
                                 muted
                                 playsInline
                                 preload="auto"
-                                webkit-playsinline="true"
                                 className="w-full h-full object-cover"
                             >
                                 <source src={aboutMeVideo} type="video/mp4" />
