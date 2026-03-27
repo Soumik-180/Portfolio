@@ -1,5 +1,30 @@
+import React, { useEffect, useRef, useState } from "react";
+import Lottie from "lottie-react";
+import aboutAnimation from "../assets/about.json";
+
 const About = () => {
-    const aboutMeGif = "/Portfolio/assets/about-me.gif";
+    const [isVisible, setIsVisible] = useState(false);
+    const containerRef = useRef(null);
+    const lottieRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+            },
+            { threshold: 0.1 }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => {
+            if (containerRef.current) {
+                observer.unobserve(containerRef.current);
+            }
+        };
+    }, []);
 
     return (
         <section className="py-16 md:py-24" id="about">
@@ -7,7 +32,7 @@ const About = () => {
                 
                 {/* Left Column: Mock Window Card */}
                 <div className="col-span-1 lg:col-span-5 flex justify-center lg:justify-start">
-                    <div className="bg-[#fcf8f2] dark:bg-slate-800 rounded-[2rem] p-4 md:p-5 shadow-2xl border border-gray-200 dark:border-slate-700 w-full max-w-lg xl:max-w-xl transform hover:-translate-y-2 transition-transform duration-500">
+                    <div className="bg-[#fcf8f2] dark:bg-slate-800 rounded-[2rem] p-4 md:p-6 shadow-2xl border border-gray-200 dark:border-slate-700 w-full max-w-xl xl:max-w-2xl transform hover:-translate-y-2 transition-transform duration-500">
                         {/* Mock Title Bar */}
                         <div className="flex items-center justify-between mb-4 px-2">
                             <div className="flex gap-2.5">
@@ -16,12 +41,19 @@ const About = () => {
                                 <div className="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></div>
                             </div>
                         </div>
-                        {/* GIF Content */}
-                        <div className="rounded-2xl overflow-hidden aspect-[4/5] bg-gray-100 dark:bg-slate-700 border-2 border-white/50 dark:border-transparent cursor-pointer">
-                            <img
-                                src={aboutMeGif}
-                                alt="About Me Animation"
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                        {/* Lottie Content */}
+                        <div 
+                            ref={containerRef}
+                            className="rounded-2xl overflow-hidden aspect-square cursor-pointer flex items-center justify-center p-4"
+                        >
+                            <Lottie
+                                lottieRef={lottieRef}
+                                animationData={aboutAnimation}
+                                loop={isVisible}
+                                autoplay={isVisible}
+                                speed={0.8}
+                                className="w-full h-full"
+                                style={{ maxWidth: "500px" }}
                             />
                         </div>
                     </div>

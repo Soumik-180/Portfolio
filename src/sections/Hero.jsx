@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import Lottie from "lottie-react";
-import helloAnimation from "../assets/hello.json";
+import helloAnimation from "../assets/Robot-Says-Hi.json";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const lottieRef = useRef(null);
   const containerRef = useRef(null);
+  const heroRef = useRef(null);
 
   useEffect(() => {
+    // Visibility observer for Lottie
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -15,19 +19,34 @@ const Hero = () => {
       { threshold: 0.1 }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
+    if (heroRef.current) observer.observe(heroRef.current);
+
+    // Dimension tracking for bounce effect
+    const updateDimensions = () => {
+      if (heroRef.current) {
+        setDimensions({
+          width: heroRef.current.offsetWidth,
+          height: heroRef.current.offsetHeight,
+        });
+      }
+    };
+    
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    const mutObserver = new MutationObserver(updateDimensions);
+    if (heroRef.current) mutObserver.observe(heroRef.current, { attributes: true });
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
+      if (heroRef.current) observer.unobserve(heroRef.current);
+      window.removeEventListener('resize', updateDimensions);
+      mutObserver.disconnect();
     };
   }, []);
 
+  const badgeSize = 350; // Increased padding to prevent bottom overflow
+
   return (
-    <section className="min-h-[85vh] flex items-center pt-32 pb-12 md:pb-20" id="home">
+    <section ref={heroRef} className="min-h-[85vh] flex items-center pt-32 pb-12 md:pb-20 relative overflow-hidden" id="home">
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center w-full">
 
         {/* Left Image Section */}
@@ -55,24 +74,7 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Scrolling Video Badge Replacement */}
-            <div 
-              ref={containerRef}
-              className="absolute -bottom-6 -left-6 md:-bottom-12 md:-left-12 w-36 h-36 md:w-56 md:h-56 z-20 hover:scale-105 transition-transform duration-300"
-            >
-              {/* Added a thick white border and shadow to make it pop like a badge */}
-              <div className="relative w-full h-full rounded-full overflow-hidden border-[6px] border-white dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-800 flex items-center justify-center p-3">
-                <Lottie
-                  lottieRef={lottieRef}
-                  animationData={helloAnimation}
-                  loop={isVisible}
-                  autoplay={isVisible}
-                  speed={0.8}
-                  className="w-full h-full"
-                  style={{ maxWidth: "400px" }}
-                />
-              </div>
-            </div>
+            {/* We removed the static video badge replacement from here because it bounces globally */}
           </div>
         </div>
 
@@ -88,6 +90,39 @@ const Hero = () => {
         </div>
 
       </div>
+
+      {/* Floating Bounce Back Lottie Animation (like Skills section) */}
+      {dimensions.width > 0 && (
+        <motion.div
+          ref={containerRef}
+          className="absolute z-30 pointer-events-none drop-shadow-2xl"
+          initial={{ 
+            x: Math.random() * Math.max(0, dimensions.width - 350),
+            y: Math.random() * Math.max(0, dimensions.height - 550)
+          }}
+          animate={{
+            x: [0, Math.max(0, dimensions.width - 350)],
+            y: [0, Math.max(0, dimensions.height - 550)]
+          }}
+          transition={{
+            x: { duration: 15, repeat: Infinity, repeatType: "mirror", ease: "linear" },
+            y: { duration: 11, repeat: Infinity, repeatType: "mirror", ease: "linear" }
+          }}
+          style={{ width: 350, height: 350 }} // Increased base bounds for the floating item
+        >
+          <div className="w-full h-full pointer-events-auto hover:scale-110 transition-transform duration-300">
+            <Lottie
+              lottieRef={lottieRef}
+              animationData={helloAnimation}
+              loop={isVisible}
+              autoplay={isVisible}
+              speed={0.8}
+              className="w-full h-full"
+            />
+          </div>
+        </motion.div>
+      )}
+
     </section>
   );
 };

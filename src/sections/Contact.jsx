@@ -1,31 +1,44 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Lottie from "lottie-react";
+
+// Import Social Animations
+import facebookAnimation from '../assets/social/facebook.json';
+import githubAnimation from '../assets/social/github.json';
+import gmailAnimation from '../assets/social/gmail.json';
+import instagramAnimation from '../assets/social/instagram.json';
+import linkedinAnimation from '../assets/social/linkedin.json';
 
 const socialLinks = [
   {
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/in/soumik-ray-455524361/',
-    gif: 'linkedin.gif'
+    animation: linkedinAnimation,
+    scale: 1.0
   },
   {
     name: 'GitHub',
     url: 'https://github.com/Soumik-180',
-    gif: 'github.gif'
+    animation: githubAnimation,
+    scale: 1.0
   },
   {
     name: 'Instagram',
     url: 'https://www.instagram.com/soumik180/',
-    gif: 'instagram.gif'
+    animation: instagramAnimation,
+    scale: 1.0
   },
   {
     name: 'Facebook',
     url: 'https://www.facebook.com/soumik.ray.142/',
-    gif: 'facebook.gif'
+    animation: facebookAnimation,
+    scale: 1.0
   },
   {
     name: 'Gmail',
     url: 'mailto:skrsoumikray@gmail.com',
-    gif: 'gmail.gif'
+    animation: gmailAnimation,
+    scale: 1.0
   }
 ];
 
@@ -33,9 +46,9 @@ const Contact = () => {
   return (
     <section 
       id="contact" 
-      className="min-h-[60vh] py-20 bg-white dark:bg-[#0f172a] transition-colors duration-300 flex flex-col items-center justify-center relative z-10 w-full"
+      className="min-h-[60vh] py-20 bg-white dark:bg-[#0f172a] transition-colors duration-300 flex flex-col items-center justify-center relative z-10 w-full px-4"
     >
-      <div className="container mx-auto px-4 flex flex-col items-center">
+      <div className="max-w-6xl mx-auto flex flex-col items-center">
         
         {/* Title with hover zoom effect */}
         <motion.h2 
@@ -73,15 +86,19 @@ const Contact = () => {
               title={social.name}
               className="group relative flex flex-col items-center"
             >
-               {/* GIF Image */}
-               <img 
-                src={`${import.meta.env.BASE_URL}assets/logo/${social.gif}?v=${new Date().getTime()}`} 
-                 alt={social.name}
-                 className={`w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain relative z-10 drop-shadow-lg ${social.name === 'LinkedIn' ? 'scale-[0.8]' : ''}`}
-               />
+               {/* Render Lottie Animation Directly */}
+               <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center relative z-10 transition-all duration-300 hover:opacity-90">
+                 <Lottie
+                   animationData={social.animation}
+                   loop={true}
+                   autoplay={true}
+                   className="w-[100%] h-[100%]"
+                   style={{ transform: `scale(${social.scale})` }}
+                 />
+               </div>
                
                {/* Tooltip-style Name on Hover */}
-               <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm font-medium font-heading text-gray-700 dark:text-gray-300">
+               <span className="absolute -bottom-10 md:-bottom-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm md:text-md font-medium font-heading text-gray-700 dark:text-gray-300">
                  {social.name}
                </span>
             </motion.a>

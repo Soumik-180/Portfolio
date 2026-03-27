@@ -1,5 +1,31 @@
+import React, { useEffect, useRef, useState } from "react";
+import Lottie from "lottie-react";
+import projectAnimation from "../assets/project.json";
+
 const Project = () => {
-    const projectGif = `${import.meta.env.BASE_URL}assets/project.gif?v=${new Date().getTime()}`;
+    const [isVisible, setIsVisible] = useState(false);
+    const containerRef = useRef(null);
+    const lottieRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+            },
+            { threshold: 0.1 }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => {
+            if (containerRef.current) {
+                observer.unobserve(containerRef.current);
+            }
+        };
+    }, []);
+
     return (
         <section className="min-h-screen py-4 flex flex-col items-center justify-center relative overflow-hidden" id="project">
             <div className="container mx-auto px-6 relative z-10 w-full flex flex-col items-center space-y-4">
@@ -43,12 +69,18 @@ const Project = () => {
                     </div>
 
                     {/* Center Animation Hub */}
-                    <div className="relative w-64 md:w-[22rem] xl:w-[28rem] z-0 flex-shrink-0 flex items-center justify-center pointer-events-none">
-                        <img 
-                            src={projectGif} 
-                            alt="Center Animation Hub" 
-                            className="w-full object-contain drop-shadow-2xl"
-                        />
+                    <div 
+                        ref={containerRef}
+                        className="relative w-64 md:w-[28rem] xl:w-[36rem] z-0 flex-shrink-0 flex items-center justify-center pointer-events-none"
+                    >
+                            <Lottie
+                                lottieRef={lottieRef}
+                                animationData={projectAnimation}
+                                loop={isVisible}
+                                autoplay={isVisible}
+                                speed={0.8}
+                                className="w-full h-full drop-shadow-2xl"
+                            />
                     </div>
 
                     {/* Right Project Card: Protein Analyzer */}

@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import Lottie from "lottie-react";
+import achievementAnimation from '../assets/achievement.json';
 
 const Achievement = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <section id="achievement" className="min-h-screen pt-20 pb-10 bg-[#f8f8f8] dark:bg-[#0f172a] transition-colors duration-300 flex items-center justify-center relative z-10 w-full overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
@@ -18,16 +42,19 @@ const Achievement = () => {
           {/* Left Side: Graphic */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              ref={containerRef}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8 }}
-              className="relative w-full max-w-[450px] lg:max-w-[480px] h-[400px] md:h-[450px] lg:h-[500px]"
+              className="relative w-full max-w-[550px] lg:max-w-[650px] h-auto aspect-square flex items-center justify-center"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}assets/achievement.gif?v=${new Date().getTime()}`}
-                alt="Achievement Illustration"
-                className="w-full h-full object-cover rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 transition-transform duration-500 hover:scale-105 cursor-pointer"
+              <Lottie
+                animationData={achievementAnimation}
+                loop={isVisible}
+                autoplay={isVisible}
+                speed={0.8}
+                className="w-full h-full"
               />
             </motion.div>
           </div>

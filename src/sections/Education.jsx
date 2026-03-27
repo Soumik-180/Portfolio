@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from 'framer-motion';
 import { GraduationCap } from 'lucide-react';
+import Lottie from "lottie-react";
+import educationAnimation from "../assets/education.json";
 
 const educationData = [
   {
@@ -24,6 +26,29 @@ const educationData = [
 ];
 
 const Education = () => {
+    const [isVisible, setIsVisible] = useState(false);
+    const containerRef = useRef(null);
+    const lottieRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+            },
+            { threshold: 0.1 }
+        );
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
+        return () => {
+            if (containerRef.current) {
+                observer.unobserve(containerRef.current);
+            }
+        };
+    }, []);
+
   return (
     <section id="education" className="min-h-screen pt-20 pb-10 bg-[#f8f8f8] dark:bg-[#0f172a] transition-colors duration-300 flex items-center justify-center relative z-10 w-full overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
@@ -34,33 +59,37 @@ const Education = () => {
           </h2>
         </div>
 
-        {/* 2-Column Layout */}
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+        {/* 2-Column Layout (Swapped: Timeline Left, Graphic Right) */}
+        <div className="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-16">
           
-          {/* Left Side: Graphic */}
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+          {/* Right Side: Graphic */}
+          <div className="w-full lg:w-[55%] flex justify-center lg:justify-start">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
+              ref={containerRef}
+              initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8 }}
-              className="relative w-full max-w-[450px] lg:max-w-[480px] h-[400px] md:h-[450px] lg:h-[500px]"
+              className="relative w-full max-w-[550px] lg:max-w-[650px] h-auto aspect-square flex items-center justify-center p-4"
             >
-              <img
-                src={`${import.meta.env.BASE_URL}assets/education.gif?v=${new Date().getTime()}`}
-                alt="Education Illustration"
-                className="w-full h-full object-cover rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 hover:scale-105 transition-transform duration-500 cursor-pointer"
+              <Lottie
+                lottieRef={lottieRef}
+                animationData={educationAnimation}
+                loop={isVisible}
+                autoplay={isVisible}
+                speed={0.8}
+                className="w-full h-full"
               />
             </motion.div>
           </div>
 
-          {/* Right Side: Timeline */}
-          <div className="w-full lg:w-1/2 flex justify-start">
+          {/* Left Side: Timeline */}
+          <div className="w-full lg:w-[45%] flex justify-end">
             <div className="relative border-l-2 border-blue-500/30 dark:border-blue-400/30 pl-6 md:pl-10 space-y-6 lg:space-y-8 w-full max-w-[600px]">
               {educationData.map((item, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, x: 50 }}
+                  initial={{ opacity: 0, x: -50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: index * 0.15 }}
