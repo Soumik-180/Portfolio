@@ -1,13 +1,15 @@
 # Soumik Ray | Portfolio
 
+**Live Demo:** [https://soumik-180.github.io/Portfolio/](https://soumik-180.github.io/Portfolio/)
+
 Welcome to my personal web portfolio! I am a passionate Biotechnology and Bioinformatics student exploring the intersection of biology, data science, programming, and web development to turn complex biological data into meaningful, accessible information.
 
 ## Key Features
 
 - **Modern & Minimalist UI**: A clean, light-mode-first aesthetic powered by carefully chosen *Times New Roman* and *Montserrat* typography themes.
-- **Dynamic Animations**: Entirely animated via `framer-motion` to create immersive custom physics, from realistic gravity bouncing bubbles in the **Skills** section to a continuous floating smartphone mockup in the **Photography** section.
+- **Dynamic Animations**: Immersive interactive physics and scalable vector graphics powered by `framer-motion` and `lottie-react`. Highlights include realistic gravity-bouncing bubbles in the **Skills** section and a freely floating vector robot in the **Hero** section.
 - **Dark Mode Support**: Seamlessly transitions between a crisp light theme and a sleek dark theme via the fixed glassmorphism navigation bar.
-- **Highly Performance Optimized**: Utilizes GPU hardware acceleration, asynchronous image decoding, and `CSS transform` caching to keep the scrolling buttery smooth even with massive graphical elements.
+- **Highly Performance Optimized**: Utilizes `IntersectionObserver` playback toggling for animations, GPU hardware acceleration, and lightweight vector graphics (Lottie) to keep scrolling perfectly smooth and highly resource-efficient.
 - **Single Page Application (SPA)**: Smooth Anchor-scrolling navigation through React.
 
 ## Layout Sections
@@ -24,7 +26,7 @@ Welcome to my personal web portfolio! I am a passionate Biotechnology and Bioinf
 
 - **Framework**: [React.js](https://reactjs.org/) (initialized via [Vite](https://vitejs.dev/))
 - **Styling**: [Tailwind CSS v3](https://tailwindcss.com/)
-- **Animation**: [Framer Motion](https://www.framer.com/motion/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/) & [Lottie for React](https://lottiereact.com/)
 - **Icons**: Lucide React
 
 ## Local Installation & Setup
