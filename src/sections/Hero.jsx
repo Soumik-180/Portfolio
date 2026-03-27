@@ -1,6 +1,7 @@
-const Hero = () => {
-  const hiGif = `${import.meta.env.BASE_URL}assets/hi.gif?v=${new Date().getTime()}`;
+import Lottie from "lottie-react";
+import helloAnimation from "../assets/hello.json";
 
+const Hero = () => {
   return (
     <section className="min-h-[85vh] flex items-center pt-32 pb-12 md:pb-20" id="home">
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center w-full">
@@ -34,10 +35,10 @@ const Hero = () => {
             <div className="absolute -bottom-6 -left-6 md:-bottom-12 md:-left-12 w-36 h-36 md:w-56 md:h-56 z-20 hover:scale-105 transition-transform duration-300">
               {/* Added a thick white border and shadow to make it pop like a badge */}
               <div className="relative w-full h-full rounded-full overflow-hidden border-[6px] border-white dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-800 flex items-center justify-center p-3">
-                <img
-                  src={hiGif}
-                  alt="Greeting Animation"
-                  className="w-full h-full object-contain"
+                <Lottie
+                  animationData={helloAnimation}
+                  loop={true}
+                  className="w-full h-full"
                 />
               </div>
             </div>
