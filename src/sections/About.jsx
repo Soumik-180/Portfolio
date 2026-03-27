@@ -1,25 +1,5 @@
-import React, { useEffect, useRef } from "react";
-
 const About = () => {
-    const videoRef = useRef(null);
-    const aboutMeVideo = "/Portfolio/assets/about-me.mp4";
-
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
-
-        const handleCanPlay = () => {
-            video.play().catch((err) => {
-                console.error("Play failed:", err);
-            });
-        };
-
-        video.addEventListener("canplay", handleCanPlay);
-
-        return () => {
-            video.removeEventListener("canplay", handleCanPlay);
-        };
-    }, []);
+    const aboutMeGif = "/Portfolio/assets/about-me.gif";
 
     return (
         <section className="py-16 md:py-24" id="about">
@@ -36,18 +16,13 @@ const About = () => {
                                 <div className="w-3.5 h-3.5 rounded-full bg-[#27c93f]"></div>
                             </div>
                         </div>
-                        {/* Video Content */}
+                        {/* GIF Content */}
                         <div className="rounded-2xl overflow-hidden aspect-[4/5] bg-gray-100 dark:bg-slate-700 border-2 border-white/50 dark:border-transparent cursor-pointer">
-                            <video
-                                ref={videoRef}
-                                loop
-                                muted
-                                playsInline
-                                preload="auto"
-                                className="w-full h-full object-cover"
-                            >
-                                <source src={aboutMeVideo} type="video/mp4" />
-                            </video>
+                            <img
+                                src={aboutMeGif}
+                                alt="About Me Animation"
+                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                            />
                         </div>
                     </div>
                 </div>
