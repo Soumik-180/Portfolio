@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import Lottie from "lottie-react";
-import aboutAnimation from "../assets/about.json";
+import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
+
+const Lottie = lazy(() => import("lottie-react"));
 
 const About = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const [lottieData, setLottieData] = useState(null);
     const containerRef = useRef(null);
     const lottieRef = useRef(null);
 
@@ -11,6 +12,11 @@ const About = () => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsVisible(entry.isIntersecting);
+                if (entry.isIntersecting && !lottieData) {
+                    import("../assets/about.json").then(module => {
+                        setLottieData(module.default || module);
+                    });
+                }
             },
             { threshold: 0.1 }
         );
@@ -24,7 +30,7 @@ const About = () => {
                 observer.unobserve(containerRef.current);
             }
         };
-    }, []);
+    }, [lottieData]);
 
     return (
         <section className="py-16 md:py-24" id="about">
@@ -44,17 +50,23 @@ const About = () => {
                         {/* Lottie Content */}
                         <div 
                             ref={containerRef}
-                            className="rounded-2xl overflow-hidden aspect-square cursor-pointer flex items-center justify-center p-4"
+                            className="rounded-2xl overflow-hidden aspect-square cursor-pointer flex items-center justify-center p-4 bg-transparent"
                         >
-                            <Lottie
-                                lottieRef={lottieRef}
-                                animationData={aboutAnimation}
-                                loop={isVisible}
-                                autoplay={isVisible}
-                                speed={0.8}
-                                className="w-full h-full"
-                                style={{ maxWidth: "500px" }}
-                            />
+                            {lottieData ? (
+                                <Suspense fallback={<div className="w-full h-full bg-transparent"></div>}>
+                                    <Lottie
+                                        lottieRef={lottieRef}
+                                        animationData={lottieData}
+                                        loop={isVisible}
+                                        autoplay={isVisible}
+                                        speed={0.8}
+                                        className="w-full h-full"
+                                        style={{ maxWidth: "500px" }}
+                                    />
+                                </Suspense>
+                            ) : (
+                                <div className="w-full h-full bg-slate-100 dark:bg-slate-700 animate-pulse rounded-2xl"></div>
+                            )}
                         </div>
                     </div>
                 </div>

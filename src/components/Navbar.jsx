@@ -13,11 +13,11 @@ const navItems = [
 ];
 
 const Navbar = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
-    // Force light mode on initial load
-    document.documentElement.classList.remove('dark');
+    // Default to dark mode so text is visible on the dark background
+    document.documentElement.classList.add('dark');
   }, []);
 
   const toggleDarkMode = () => {
@@ -39,8 +39,8 @@ const Navbar = () => {
             key={item.name}
             href={item.href}
             className={`text-base font-medium transition-all duration-300 hover:scale-110 origin-left hover:text-black dark:hover:text-white hover:underline underline-offset-4 ${
-              index === 0 
-                ? 'text-black dark:text-white underline underline-offset-4 decoration-2' 
+              index === 0
+                ? 'text-black dark:text-white underline underline-offset-4 decoration-2'
                 : 'text-gray-600 dark:text-gray-400'
             }`}
           >
@@ -51,8 +51,7 @@ const Navbar = () => {
 
       {/* Right Side Control */}
       <div className="flex items-center ml-auto pointer-events-auto">
-        {/* Dark Mode Toggle */}
-        <button 
+        <button
           onClick={toggleDarkMode}
           className="text-black dark:text-white p-2 rounded-full cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 hover:-translate-y-1 hover:scale-110 transition-all duration-300 opacity-90 hover:opacity-100"
           aria-label="Toggle Dark Mode"

@@ -18,6 +18,15 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
+
+# Image optimization - ignore original uncompressed images
+# Keep only optimized versions (.webp and -optimized.jpeg)
+public/photo.png
+public/assets/Photography/*.jpeg
+public/assets/Photography/*.jpg
+public/assets/Photography-backup/
+
+# Keep: photo.webp, photo-optimized.png, *.webp, *-optimized.jpeg
 *.ntvs*
 *.njsproj
 *.sln

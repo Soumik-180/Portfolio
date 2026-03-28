@@ -63,7 +63,7 @@ const Experience = () => {
                                         {/* Desktop Timeline dot */}
                                         <div className="hidden md:block absolute -left-[10.5px] top-1.5 w-5 h-5 rounded-full border-4 border-primary bg-accent group-hover:scale-125 transition-transform" />
 
-                                        <h3 className="text-xl font-bold text-white mb-1 group-hover:text-accent transition-colors">{item.school}</h3>
+                                        <h3 className="text-xl font-bold text-[#111] dark:text-white mb-1 group-hover:text-accent transition-colors">{item.school}</h3>
                                         <p className="text-accent mb-4 flex items-center gap-2">
                                             <GraduationCap size={16} />
                                             {item.degree}
@@ -75,7 +75,7 @@ const Experience = () => {
                         </div>
 
                         <div className="mt-16">
-                            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                            <h3 className="text-xl font-bold text-[#111] dark:text-white mb-6 flex items-center gap-2">
                                 <Award className="text-accent" size={24} />
                                 Certifications & Achievements
                             </h3>
@@ -105,7 +105,7 @@ const Experience = () => {
                                         transition={{ delay: index * 0.1 }}
                                         className="p-6 bg-secondary/30 rounded-xl border border-white/5 hover:border-accent/30 transition-colors group"
                                     >
-                                        <h4 className="text-lg font-semibold text-white mb-2 group-hover:text-accent transition-colors">{cert.title}</h4>
+                                        <h4 className="text-lg font-semibold text-[#111] dark:text-white mb-2 group-hover:text-accent transition-colors">{cert.title}</h4>
                                         <p className="text-muted text-sm mb-1">{cert.issuer}</p>
                                         <p className="text-accent text-xs uppercase tracking-wider">{cert.date}</p>
                                     </motion.div>

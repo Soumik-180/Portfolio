@@ -1,58 +1,74 @@
-import React, { useEffect, useRef, useState } from "react";
-import Lottie from "lottie-react";
-import helloAnimation from "../assets/Robot-Says-Hi.json";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+
+// Dynamically import Lottie only when needed
+const Lottie = lazy(() => import('lottie-react'));
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [lottieData, setLottieData] = useState(null);
   const lottieRef = useRef(null);
-  const containerRef = useRef(null);
   const heroRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    // Visibility observer for Lottie
+    // Visibility observer for Lottie and Animations
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
+        // Load Lottie JSON conditionally when component becomes visible
+        if (entry.isIntersecting && !lottieData) {
+          import('../assets/Robot-Says-Hi.json').then((module) => {
+            setLottieData(module.default);
+          });
+        }
       },
       { threshold: 0.1 }
     );
 
     if (heroRef.current) observer.observe(heroRef.current);
 
-    // Dimension tracking for bounce effect
-    const updateDimensions = () => {
-      if (heroRef.current) {
-        setDimensions({
-          width: heroRef.current.offsetWidth,
-          height: heroRef.current.offsetHeight,
-        });
-      }
-    };
-    
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    const mutObserver = new MutationObserver(updateDimensions);
-    if (heroRef.current) mutObserver.observe(heroRef.current, { attributes: true });
-
     return () => {
       if (heroRef.current) observer.unobserve(heroRef.current);
-      window.removeEventListener('resize', updateDimensions);
-      mutObserver.disconnect();
     };
-  }, []);
-
-  const badgeSize = 350; // Increased padding to prevent bottom overflow
+  }, [lottieData]);
 
   return (
     <section ref={heroRef} className="min-h-[85vh] flex items-center pt-32 pb-12 md:pb-20 relative overflow-hidden" id="home">
       <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center w-full">
 
         {/* Left Image Section */}
-        <div className="relative order-2 lg:order-1 flex justify-center lg:justify-start lg:pl-12 lg:-mt-16">
+        <div className="relative order-2 lg:order-1 flex justify-center lg:justify-start lg:pl-12 lg:-mt-12 mt-16 md:mt-20">
           {/* Increased profile photo size: w-[480px] instead of [400px] */}
-          <div className="relative w-80 md:w-[480px] aspect-[4/5] z-10 group">
+          <div className="relative w-80 md:w-[480px] aspect-[4/5] z-10 group mb-8 md:mb-12">
+
+            {/* Peeking Robot Companion (Tucked on bottom right) */}
+            {!shouldReduceMotion && (
+              <motion.div
+                className="absolute -bottom-[40px] -right-[30px] md:-bottom-[50px] md:-right-[50px] z-20 pointer-events-none drop-shadow-2xl"
+                initial={{ y: 5 }}
+                animate={isVisible ? { y: [5, -5, 5] } : {}}
+                transition={{
+                  y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                }}
+                style={{ width: 180, height: 180, willChange: "transform" }}
+              >
+                <div className="w-full h-full transform -rotate-12 origin-top-left transition-transform duration-500 group-hover:rotate-0 group-hover:scale-110">
+                  {lottieData && (
+                    <Suspense fallback={<div className="w-full h-full bg-transparent"></div>}>
+                      <Lottie
+                        lottieRef={lottieRef}
+                        animationData={lottieData}
+                        loop={isVisible}
+                        autoplay={isVisible}
+                        speed={0.8}
+                        className="w-full h-full"
+                      />
+                    </Suspense>
+                  )}
+                </div>
+              </motion.div>
+            )}
 
             {/* The Profile Art with Moving Light Effect (Tilted left) */}
             <div className="relative w-full h-full rounded-2xl overflow-hidden isolate shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
@@ -66,11 +82,21 @@ const Hero = () => {
 
               {/* Inner container to crop the middle and form the glowing outline */}
               <div className="absolute inset-[4px] rounded-[14px] overflow-hidden bg-white dark:bg-slate-800 z-10 shadow-[inset_0_0_15px_rgba(0,0,0,0.1)]">
-                <img
-                  src={`${import.meta.env.BASE_URL}photo.png`}
-                  alt="Soumik Ray Profile Art"
-                  className="w-full h-full object-cover relative z-10"
-                />
+                <picture>
+                  {/* WebP format for modern browsers */}
+                  <source 
+                    srcSet={`${import.meta.env.BASE_URL}photo.webp`}
+                    type="image/webp"
+                  />
+                  {/* PNG fallback for older browsers */}
+                  <img
+                    src={`${import.meta.env.BASE_URL}photo-optimized.png`}
+                    alt="Soumik Ray Profile Art"
+                    className="w-full h-full object-cover relative z-10"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </picture>
               </div>
             </div>
 
@@ -90,38 +116,6 @@ const Hero = () => {
         </div>
 
       </div>
-
-      {/* Floating Bounce Back Lottie Animation (like Skills section) */}
-      {dimensions.width > 0 && (
-        <motion.div
-          ref={containerRef}
-          className="absolute z-30 pointer-events-none drop-shadow-2xl"
-          initial={{ 
-            x: Math.random() * Math.max(0, dimensions.width - 350),
-            y: Math.random() * Math.max(0, dimensions.height - 550)
-          }}
-          animate={{
-            x: [0, Math.max(0, dimensions.width - 350)],
-            y: [0, Math.max(0, dimensions.height - 550)]
-          }}
-          transition={{
-            x: { duration: 15, repeat: Infinity, repeatType: "mirror", ease: "linear" },
-            y: { duration: 11, repeat: Infinity, repeatType: "mirror", ease: "linear" }
-          }}
-          style={{ width: 350, height: 350 }} // Increased base bounds for the floating item
-        >
-          <div className="w-full h-full pointer-events-auto hover:scale-110 transition-transform duration-300">
-            <Lottie
-              lottieRef={lottieRef}
-              animationData={helloAnimation}
-              loop={isVisible}
-              autoplay={isVisible}
-              speed={0.8}
-              className="w-full h-full"
-            />
-          </div>
-        </motion.div>
-      )}
 
     </section>
   );

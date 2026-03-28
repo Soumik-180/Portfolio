@@ -32,37 +32,22 @@ const Education = () => {
 
     useEffect(() => {
         const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsVisible(entry.isIntersecting);
-            },
+            ([entry]) => { setIsVisible(entry.isIntersecting); },
             { threshold: 0.1 }
         );
-
-        if (containerRef.current) {
-            observer.observe(containerRef.current);
-        }
-
-        return () => {
-            if (containerRef.current) {
-                observer.unobserve(containerRef.current);
-            }
-        };
+        if (containerRef.current) observer.observe(containerRef.current);
+        return () => { if (containerRef.current) observer.unobserve(containerRef.current); };
     }, []);
 
   return (
-    <section id="education" className="min-h-screen pt-20 pb-10 bg-[#f8f8f8] dark:bg-[#0f172a] transition-colors duration-300 flex items-center justify-center relative z-10 w-full overflow-hidden">
+    <section id="education" className="min-h-screen pt-20 pb-10 flex items-center justify-center relative z-10 w-full overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 max-w-[1400px]">
-        {/* Title */}
         <div className="text-center mb-8 md:mb-10">
-          <h2 className="inline-block text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-[#111] dark:text-white transition-all duration-500 hover:scale-110 hover:text-blue-500 dark:hover:text-blue-400 cursor-default">
+          <h2 className="inline-block text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-[#111] dark:text-white transition-all duration-500 hover:scale-110 hover:text-blue-600 dark:hover:text-blue-400 cursor-default">
             Education
           </h2>
         </div>
-
-        {/* 2-Column Layout (Swapped: Timeline Left, Graphic Right) */}
         <div className="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-16">
-          
-          {/* Right Side: Graphic */}
           <div className="w-full lg:w-[55%] flex justify-center lg:justify-start">
             <motion.div
               ref={containerRef}
@@ -72,20 +57,11 @@ const Education = () => {
               transition={{ duration: 0.8 }}
               className="relative w-full max-w-[550px] lg:max-w-[650px] h-auto aspect-square flex items-center justify-center p-4"
             >
-              <Lottie
-                lottieRef={lottieRef}
-                animationData={educationAnimation}
-                loop={isVisible}
-                autoplay={isVisible}
-                speed={0.8}
-                className="w-full h-full"
-              />
+              <Lottie lottieRef={lottieRef} animationData={educationAnimation} loop={isVisible} autoplay={isVisible} speed={0.8} className="w-full h-full" />
             </motion.div>
           </div>
-
-          {/* Left Side: Timeline */}
           <div className="w-full lg:w-[45%] flex justify-end">
-            <div className="relative border-l-2 border-blue-500/30 dark:border-blue-400/30 pl-6 md:pl-10 space-y-6 lg:space-y-8 w-full max-w-[600px]">
+            <div className="relative border-l-2 border-blue-600/30 dark:border-blue-500/30 pl-6 md:pl-10 space-y-6 lg:space-y-8 w-full max-w-[600px]">
               {educationData.map((item, index) => (
                 <motion.div
                   key={index}
@@ -95,37 +71,20 @@ const Education = () => {
                   transition={{ duration: 0.6, delay: index * 0.15 }}
                   className="relative group"
                 >
-                  {/* Timeline Dot */}
-                  <span className="absolute -left-[33px] md:-left-[51px] top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-blue-500 ring-4 ring-white dark:ring-[#0f172a] group-hover:scale-125 transition-transform duration-500"></span>
-
-                  {/* Content Wrapper for Hover Zoom */}
+                  <span className="absolute -left-[33px] md:-left-[51px] top-1 h-4 w-4 md:h-5 md:w-5 rounded-full bg-blue-600 dark:bg-blue-500 ring-4 ring-black/5 dark:ring-white/10 group-hover:scale-125 transition-transform duration-500"></span>
                   <div className="group-hover:scale-105 origin-left transition-transform duration-500 cursor-default">
-                    {/* Period */}
-                    <h4 className="text-xs md:text-sm font-bold text-blue-600 dark:text-blue-400 mb-1 lg:mb-2 uppercase tracking-wider font-heading">
-                      {item.period}
-                    </h4>
-
-                    {/* Institution */}
-                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-[#111] dark:text-white mb-1 font-heading transition-colors duration-300 leading-tight">
-                      {item.institution}
-                    </h3>
-
-                    {/* Degree/Role */}
+                    <h4 className="text-xs md:text-sm font-bold text-blue-600 dark:text-blue-400 mb-1 lg:mb-2 uppercase tracking-wider font-heading">{item.period}</h4>
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-[#111] dark:text-white mb-1 font-heading leading-tight">{item.institution}</h3>
                     <p className="text-sm md:text-md font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-2">
-                      <GraduationCap className="w-4 h-4 md:w-5 md:h-5 text-blue-500 flex-shrink-0" />
+                      <GraduationCap className="w-4 h-4 md:w-5 md:h-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
                       {item.degree}
                     </p>
-
-                    {/* Details */}
-                    <p className="text-sm text-gray-600 dark:text-gray-400 font-sans leading-relaxed group-hover:text-black dark:group-hover:text-white transition-colors duration-300">
-                      {item.details}
-                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 font-sans leading-relaxed group-hover:text-[#111] dark:group-hover:text-white transition-colors duration-300">{item.details}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>

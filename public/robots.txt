@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://soumik-180.github.io/Portfolio/

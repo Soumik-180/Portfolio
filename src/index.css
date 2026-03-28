@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 :root {
-  background-color: #ffffff;
   color: #111827;
 }
 
@@ -15,11 +14,9 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #f8f8f8;
+  @apply bg-white dark:bg-[#0f172a] text-[#111] dark:text-gray-100 transition-colors duration-300;
 }
 
-
-/* Custom Floating Animations for Layouts */
 @keyframes float {
   0% { transform: translateY(0px); }
   50% { transform: translateY(-15px); }
@@ -34,7 +31,6 @@ body {
   animation: float 6s ease-in-out 3s infinite;
 }
 
-/* Hexagon Shape */
 .hexagon {
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
@@ -43,7 +39,6 @@ body {
   animation: float 8s ease-in-out infinite;
 }
 
-/* Bubble Wobble Effect */
 @keyframes wobble {
   0%, 100% { border-radius: 50%; transform: scale(1); }
   25% { border-radius: 45% 55% 50% 50%; transform: scale(1.02, 0.98); }
@@ -55,7 +50,6 @@ body {
   animation: wobble 4s ease-in-out infinite;
 }
 
-/* Iridescence Effect */
 @keyframes iridescence {
   0%, 100% { filter: hue-rotate(0deg) saturate(1); }
   50% { filter: hue-rotate(15deg) saturate(1.2); }

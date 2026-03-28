@@ -1,0 +1,112 @@
+{
+  "photos": [
+    {
+      "id": "img-1",
+      "filename": "PXL_20250713_135225045.NIGHT",
+      "title": "Stellar Vision",
+      "description": "Celestial moments in time",
+      "category": "night",
+      "date": "2025-07-13",
+      "featured": true
+    },
+    {
+      "id": "img-2",
+      "filename": "PXL_20260305_164617798.NIGHT",
+      "title": "Twilight Hour",
+      "description": "The magic between day and night",
+      "category": "night",
+      "date": "2026-03-05",
+      "featured": true
+    },
+    {
+      "id": "img-3",
+      "filename": "PXL_20250110_193655121.NIGHT",
+      "title": "Nocturnal Beauty",
+      "description": "Night sky's magnificent display",
+      "category": "night",
+      "date": "2025-01-10",
+      "featured": true
+    },
+    {
+      "id": "img-4",
+      "filename": "PXL_20250329_093602821.MP",
+      "title": "Seasonal Change",
+      "description": "Transition between seasons captured",
+      "category": "landscape",
+      "date": "2025-03-29",
+      "featured": true
+    },
+    {
+      "id": "img-5",
+      "filename": "IMG-20250530-WA0126",
+      "title": "Desert Landscape",
+      "description": "Golden hour captures nature's tranquility",
+      "category": "landscape",
+      "date": "2025-05-30",
+      "featured": true
+    },
+    {
+      "id": "img-6",
+      "filename": "IMG_20201128_080731",
+      "title": "Morning Serenity",
+      "description": "Early light through nature's canvas",
+      "category": "nature",
+      "date": "2020-11-28",
+      "featured": false
+    },
+    {
+      "id": "img-7",
+      "filename": "PXL_20250228_120121148",
+      "title": "Urban Geometry",
+      "description": "Architecture meets light",
+      "category": "urban",
+      "date": "2025-02-28",
+      "featured": false
+    },
+    {
+      "id": "img-8",
+      "filename": "PXL_20250301_051548454.MP",
+      "title": "Nature's Detail",
+      "description": "Macro perspective on natural beauty",
+      "category": "nature",
+      "date": "2025-03-01",
+      "featured": false
+    },
+    {
+      "id": "img-9",
+      "filename": "PXL_20250330_120642675",
+      "title": "Artistic Expression",
+      "description": "Creative interpretation of space",
+      "category": "abstract",
+      "date": "2025-03-30",
+      "featured": false
+    },
+    {
+      "id": "img-10",
+      "filename": "PXL_20250530_115148008.MP",
+      "title": "Summer Light",
+      "description": "Warmth of golden hour",
+      "category": "landscape",
+      "date": "2025-05-30",
+      "featured": false
+    },
+    {
+      "id": "img-11",
+      "filename": "PXL_20251113_103223695.MP",
+      "title": "Minimalist Frame",
+      "description": "Less is more - simplicity in composition",
+      "category": "minimalist",
+      "date": "2025-11-13",
+      "featured": false
+    },
+    {
+      "id": "img-12",
+      "filename": "PXL_20250213_051226487",
+      "title": "Colors of Life",
+      "description": "Vibrant moments in everyday scenes",
+      "category": "landscape",
+      "date": "2025-02-13",
+      "featured": false
+    }
+  ]
+}

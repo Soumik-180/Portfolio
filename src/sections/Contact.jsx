@@ -1,57 +1,50 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import Lottie from "lottie-react";
+import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
-// Import Social Animations
-import facebookAnimation from '../assets/social/facebook.json';
-import githubAnimation from '../assets/social/github.json';
-import gmailAnimation from '../assets/social/gmail.json';
-import instagramAnimation from '../assets/social/instagram.json';
-import linkedinAnimation from '../assets/social/linkedin.json';
+const Lottie = lazy(() => import("lottie-react"));
 
 const socialLinks = [
-  {
-    name: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/soumik-ray-455524361/',
-    animation: linkedinAnimation,
-    scale: 1.0
-  },
-  {
-    name: 'GitHub',
-    url: 'https://github.com/Soumik-180',
-    animation: githubAnimation,
-    scale: 1.0
-  },
-  {
-    name: 'Instagram',
-    url: 'https://www.instagram.com/soumik180/',
-    animation: instagramAnimation,
-    scale: 1.0
-  },
-  {
-    name: 'Facebook',
-    url: 'https://www.facebook.com/soumik.ray.142/',
-    animation: facebookAnimation,
-    scale: 1.0
-  },
-  {
-    name: 'Gmail',
-    url: 'mailto:skrsoumikray@gmail.com',
-    animation: gmailAnimation,
-    scale: 1.0
-  }
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/soumik-ray-455524361/', animationPath: () => import('../assets/social/linkedin.json'), scale: 1.0 },
+  { name: 'GitHub', url: 'https://github.com/Soumik-180', animationPath: () => import('../assets/social/github.json'), scale: 1.0 },
+  { name: 'Instagram', url: 'https://www.instagram.com/soumik180/', animationPath: () => import('../assets/social/instagram.json'), scale: 1.0 },
+  { name: 'Facebook', url: 'https://www.facebook.com/soumik.ray.142/', animationPath: () => import('../assets/social/facebook.json'), scale: 1.0 },
+  { name: 'Gmail', url: 'mailto:skrsoumikray@gmail.com', animationPath: () => import('../assets/social/gmail.json'), scale: 1.0 }
 ];
 
-const Contact = () => {
+const SocialIcon = ({ social, isVisible }) => {
+  const [animationData, setAnimationData] = useState(null);
+  useEffect(() => {
+    if (isVisible && !animationData) {
+      social.animationPath().then(mod => setAnimationData(mod.default || mod));
+    }
+  }, [isVisible, social, animationData]);
+
+  if (!animationData) return <div className="w-full h-full bg-white/10 animate-pulse rounded-2xl"></div>;
   return (
-    <section 
-      id="contact" 
-      className="min-h-[60vh] py-20 bg-white dark:bg-[#0f172a] transition-colors duration-300 flex flex-col items-center justify-center relative z-10 w-full px-4"
-    >
+    <Suspense fallback={<div className="w-full h-full bg-transparent"></div>}>
+      <Lottie animationData={animationData} loop={isVisible} autoplay={isVisible} className="w-[100%] h-[100%]" style={{ transform: `scale(${social.scale})` }} />
+    </Suspense>
+  );
+};
+
+const Contact = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { setIsVisible(entry.isIntersecting); },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section id="contact" ref={containerRef} className="min-h-[60vh] py-20 flex flex-col items-center justify-center relative z-10 w-full px-4">
       <div className="max-w-6xl mx-auto flex flex-col items-center">
-        
-        {/* Title with hover zoom effect */}
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -60,8 +53,6 @@ const Contact = () => {
         >
           Contact me
         </motion.h2>
-
-        {/* Social Links Flex Container */}
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16 max-w-4xl mx-auto">
           {socialLinks.map((social, index) => (
             <motion.a
@@ -72,46 +63,28 @@ const Contact = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ 
-                duration: 0.5, 
-                delay: index * 0.1,
-                type: "spring", stiffness: 100 
-              }}
-              whileHover={{ 
-                y: -15, 
-                scale: 1.15,
-                transition: { type: "spring", stiffness: 300, damping: 15 }
-              }}
+              transition={{ duration: 0.5, delay: index * 0.1, type: "spring", stiffness: 100 }}
+              whileHover={shouldReduceMotion ? {} : { y: -15, scale: 1.15, transition: { type: "spring", stiffness: 300, damping: 15 } }}
               whileTap={{ scale: 0.95 }}
               title={social.name}
               className="group relative flex flex-col items-center"
+              style={{ willChange: "transform" }}
             >
-               {/* Render Lottie Animation Directly */}
-               <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center relative z-10 transition-all duration-300 hover:opacity-90">
-                 <Lottie
-                   animationData={social.animation}
-                   loop={true}
-                   autoplay={true}
-                   className="w-[100%] h-[100%]"
-                   style={{ transform: `scale(${social.scale})` }}
-                 />
-               </div>
-               
-               {/* Tooltip-style Name on Hover */}
-               <span className="absolute -bottom-10 md:-bottom-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm md:text-md font-medium font-heading text-gray-700 dark:text-gray-300">
-                 {social.name}
-               </span>
+              <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 flex items-center justify-center relative z-10">
+                <SocialIcon social={social} isVisible={isVisible} />
+              </div>
+              <span className="absolute -bottom-10 md:-bottom-12 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm md:text-md font-medium font-heading text-gray-300">
+                {social.name}
+              </span>
             </motion.a>
           ))}
         </div>
-
-        {/* Final Outro Message */}
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 md:mt-32 text-xl md:text-2xl font-serif italic text-gray-500 dark:text-gray-400 text-center"
+          className="mt-20 md:mt-32 text-xl md:text-2xl font-serif italic text-gray-400 text-center"
         >
           Thank you for visiting
         </motion.p>
