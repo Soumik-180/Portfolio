@@ -1,32 +1,30 @@
 <div align="center">
 
-# 🌟 Soumik's Portfolio
+# Soumik's Portfolio
 
 [![Portfolio](https://img.shields.io/badge/View%20Live-Portfolio-blueviolet?style=for-the-badge&logo=github)](https://soumik-180.github.io/Portfolio)
 [![GitHub](https://img.shields.io/badge/GitHub-Soumik--180-181717?style=for-the-badge&logo=github)](https://github.com/Soumik-180)
-
-[![Portfolio Preview](./preview.png)](https://soumik-180.github.io/Portfolio)
 
 </div>
 
 ---
 
-## 📌 About
+## About
 
 A personal portfolio website to showcase my projects, skills, and experience — built with smooth Lottie animations and a modern design.
 
 ---
 
-## ✨ Features
+## Features
 
-- 🎨 Lottie animations for an interactive experience
-- 📱 Fully responsive design
-- ⚡ Fast and lightweight
-- 🌙 Clean and modern UI
+- Lottie animations for an interactive experience
+- Fully responsive design
+- Fast and lightweight
+- Clean and modern UI
 
 ---
 
-## 🛠️ Built With
+## Built With
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
@@ -35,7 +33,7 @@ A personal portfolio website to showcase my projects, skills, and experience —
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 To run this project locally:
 
@@ -52,7 +50,7 @@ open index.html
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 Portfolio/
@@ -67,7 +65,7 @@ Portfolio/
 
 ---
 
-## 📬 Contact
+## Contact
 
 Feel free to reach out!
 
